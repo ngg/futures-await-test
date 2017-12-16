@@ -1,0 +1,25 @@
+[package]
+name = "futures-await-test"
+version = "0.1.0"
+authors = ["Gergely Nagy <ngg@ngg.hu>"]
+license = "MIT"
+readme = "README.md"
+keywords = ["async"]
+categories = ["asynchronous", "rust-patterns"]
+repository = "https://github.com/ngg/futures-await-test"
+homepage = "https://github.com/ngg/futures-await-test"
+description = """
+Async test support for Rust through a procedural macro. This crate defines the
+`#[async_test]` attribute for functions to make writing tests that use async/await easier.
+"""
+
+[lib]
+proc-macro = true
+
+[dependencies]
+futures-await-quote = "0.4"
+futures-await-syn = { version = "0.12", features = ["full", "fold", "parsing", "printing"], default-features = false }
+proc-macro2 = { version = "0.1", features = ["unstable"] }
+
+[dev-dependencies]
+futures-await = "0.1"
