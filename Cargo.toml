@@ -10,8 +10,11 @@ repository = "https://github.com/ngg/futures-await-test"
 homepage = "https://github.com/ngg/futures-await-test"
 description = """
 Async test support for Rust through a procedural macro. This crate defines the
-`#[async_test]` attribute for functions to make writing tests that use async/await easier.
+`#[async_test]` attribute to make writing tests that use async/await easier.
 """
+
+[badges]
+travis-ci = { repository = "ngg/futures-await-test" }
 
 [lib]
 proc-macro = true
