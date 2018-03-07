@@ -1,7 +1,7 @@
 #![feature(proc_macro, conservative_impl_trait, generators)]
 
-extern crate futures_await_test;
 extern crate futures_await as futures;
+extern crate futures_await_test;
 use futures_await_test::async_test;
 use futures::prelude::*;
 
@@ -19,7 +19,11 @@ fn panic_test() -> Result<(), ()> {
 #[async_test(should_fail)]
 fn fail_test() -> Result<(), ()> {
     let x = await!(create_future())?;
-    if x == 5 { Ok(()) } else { Err(()) }
+    if x == 5 {
+        Ok(())
+    } else {
+        Err(())
+    }
 }
 
 #[async_test]
