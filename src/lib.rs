@@ -17,37 +17,34 @@ pub fn async_test(attribute: TokenStream, function: TokenStream) -> TokenStream 
     let (ident, inner_ident) = match parsed {
         Item::Fn(ref mut item) => {
             let orig = item.ident;
-            let inner_name = "_inner_".to_owned() + orig.as_ref();
-            item.ident = Ident::new(&inner_name, orig.span);
+            item.ident = Ident::new("inner", Span::def_site());
             (orig, item.ident)
         }
         _ => panic!("#[async_test] can only be applied to functions"),
     };
 
-    let attribute = attribute.to_string();
-    let call = if attribute == "( should_panic )" {
-        quote_spanned!(Span::call_site() =>
+    let span = Span::call_site();
+    let call = match attribute.to_string().as_ref() {
+        "( should_panic )" => quote_spanned!(span=>
             use std;
             let result = std::panic::catch_unwind(|| #inner_ident().wait());
             if result.is_ok() {
                 panic!("test did not panic");
             }
-        )
-    } else if attribute == "( should_fail )" {
-        quote_spanned!(Span::call_site() =>
+        ),
+        "( should_fail )" => quote_spanned!(span=>
             let result = #inner_ident().wait();
             if result.is_ok() {
                 panic!("test did not fail")
             }
-        )
-    } else if attribute == "" {
-        quote_spanned!(Span::call_site() =>
+        ),
+        "" => quote_spanned!(span=>
             #inner_ident().wait().unwrap();
-        )
-    } else {
-        panic!("the #[async_test] attribute currently only takes `should_panic` or `should_fail` as an arg");
+        ),
+        _ => panic!("the #[async_test] attribute currently only takes `should_panic` or `should_fail` as an arg")
     };
-    let output = quote_spanned!(Span::call_site() =>
+
+    quote_spanned!(span=>
         #[async]
         #parsed
 
@@ -55,6 +52,5 @@ pub fn async_test(attribute: TokenStream, function: TokenStream) -> TokenStream 
         fn #ident() {
             #call
         }
-    );
-    output.into()
+    ).into()
 }
