@@ -1,5 +1,5 @@
 #![feature(proc_macro)]
-#![recursion_limit = "128"]
+#![recursion_limit = "4096"]
 
 extern crate proc_macro;
 extern crate proc_macro2;
@@ -17,7 +17,8 @@ pub fn async_test(attribute: TokenStream, function: TokenStream) -> TokenStream 
     let (ident, inner_ident) = match parsed {
         Item::Fn(ref mut item) => {
             let orig = item.ident;
-            item.ident = Ident::new("inner", Span::def_site());
+            let inner_name = "_inner_".to_owned() + orig.as_ref();
+            item.ident = Ident::new(&inner_name, Span::def_site());
             (orig, item.ident)
         }
         _ => panic!("#[async_test] can only be applied to functions"),
