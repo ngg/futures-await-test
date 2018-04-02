@@ -18,7 +18,7 @@ pub fn async_test(attribute: TokenStream, function: TokenStream) -> TokenStream 
         Item::Fn(ref mut item) => {
             let orig = item.ident;
             let inner_name = "_inner_".to_owned() + orig.as_ref();
-            item.ident = Ident::new(&inner_name, Span::def_site());
+            item.ident = Ident::from(inner_name);
             (orig, item.ident)
         }
         _ => panic!("#[async_test] can only be applied to functions"),

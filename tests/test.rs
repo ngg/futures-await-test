@@ -1,4 +1,4 @@
-#![feature(proc_macro, conservative_impl_trait, generators)]
+#![feature(generators, proc_macro)]
 
 extern crate futures_await as futures;
 extern crate futures_await_test;
