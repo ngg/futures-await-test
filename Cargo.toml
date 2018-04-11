@@ -1,6 +1,6 @@
 [package]
 name = "futures-await-test"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
 license = "MIT"
 readme = "README.md"
@@ -25,4 +25,4 @@ quote = "0.5"
 syn = { version = "0.13", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
 
 [dev-dependencies]
-futures-await = { path = "futures-await", version = "0.1" }
+futures-await = "0.1.1"
