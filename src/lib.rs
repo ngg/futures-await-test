@@ -2,11 +2,13 @@
 #![recursion_limit = "4096"]
 
 extern crate proc_macro;
+extern crate proc_macro2;
 #[macro_use]
 extern crate quote;
 extern crate syn;
 
 use proc_macro::TokenStream;
+use proc_macro2::Span;
 use syn::{Ident, Item};
 
 #[proc_macro_attribute]
@@ -20,11 +22,11 @@ pub fn async_test(params: TokenStream, function: TokenStream) -> TokenStream {
     let mut attrs = vec![];
     let (ident, inner_ident) = match parsed {
         Item::Fn(ref mut item) => {
-            let orig = item.ident;
-            let inner_name = "_inner_".to_owned() + orig.as_ref();
-            item.ident = Ident::from(inner_name);
+            let orig = item.ident.clone();
+            let inner_name = "_inner_".to_owned() + &orig.to_string();
+            item.ident = Ident::new(&inner_name, Span::call_site());
             std::mem::swap(&mut attrs, &mut item.attrs);
-            (orig, item.ident)
+            (orig, item.ident.clone())
         }
         _ => panic!("#[async_test] can only be applied to functions"),
     };
