@@ -31,15 +31,28 @@ pub fn async_test(params: TokenStream, function: TokenStream) -> TokenStream {
         _ => panic!("#[async_test] can only be applied to functions"),
     };
 
+    let ret_type = if attrs.iter().any(|a| {
+        a.path
+            .segments
+            .first()
+            .map(|s| s.into_value().ident == "should_panic")
+            .unwrap_or(false)
+    }) {
+        quote!(())
+    } else {
+        quote!(impl ::std::process::Termination)
+    };
+
     quote!(
-        #[async]
-        #parsed
+        async #parsed
 
         #[test]
         #(#attrs )*
-        fn #ident() {
-            use futures::stable::block_on_stable;
-            block_on_stable(#inner_ident()).unwrap();
+        fn #ident() -> #ret_type {
+            use ::futures::executor::LocalPool;
+            let mut pool = LocalPool::new();
+            let mut exec = pool.executor();
+            pool.run_until(#inner_ident(), &mut exec)
         }
     ).into()
 }
