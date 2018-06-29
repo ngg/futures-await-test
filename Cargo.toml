@@ -20,7 +20,7 @@ travis-ci = { repository = "ngg/futures-await-test" }
 proc-macro = true
 
 [dependencies]
-futures = { path = "../futures-rs/futures" }
+futures = { git = "https://github.com/rust-lang-nursery/futures-rs", branch = "0.3" }
 proc-macro2 = "0.4"
 quote = "0.6"
 syn = { version = "0.14", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
