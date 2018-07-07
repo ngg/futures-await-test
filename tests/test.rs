@@ -2,8 +2,9 @@
 
 extern crate futures_await as futures;
 extern crate futures_await_test;
-use futures_await_test::async_test;
+use futures::prelude::await;
 use futures::prelude::*;
+use futures_await_test::async_test;
 
 fn create_future() -> impl Future<Item = u32, Error = ()> {
     Ok(4).into_future()

@@ -1,6 +1,6 @@
 [package]
 name = "futures-await-test"
-version = "0.1.5"
+version = "0.1.6"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
 license = "MIT"
 readme = "README.md"
@@ -20,9 +20,9 @@ travis-ci = { repository = "ngg/futures-await-test" }
 proc-macro = true
 
 [dependencies]
-proc-macro2 = "0.3"
-quote = "0.5"
-syn = { version = "0.13", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
+proc-macro2 = "0.4"
+quote = "0.6"
+syn = { version = "0.14", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
 
 [dev-dependencies]
 futures-await = "0.1.1"
