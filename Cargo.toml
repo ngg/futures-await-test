@@ -1,6 +1,6 @@
 [package]
-name = "futures-await-test"
-version = "0.3.0"
+name = "futures-await-test-preview"
+version = "0.3.0-alpha.1"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
 license = "MIT"
 readme = "README.md"
@@ -17,6 +17,7 @@ Async test support for Rust through a procedural macro. This crate defines the
 travis-ci = { repository = "ngg/futures-await-test" }
 
 [lib]
+name = "futures_await_test"
 proc-macro = true
 
 [dependencies]
