@@ -1,4 +1,4 @@
-#![feature(async_await, await_macro, futures_api, termination_trait_lib, use_extern_macros)]
+#![feature(async_await, await_macro, futures_api, termination_trait_lib)]
 
 extern crate futures;
 extern crate futures_await_test;

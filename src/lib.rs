@@ -50,8 +50,8 @@ pub fn async_test(params: TokenStream, function: TokenStream) -> TokenStream {
         fn #ident() -> #ret_type {
             use ::futures::executor::LocalPool;
             let mut pool = LocalPool::new();
-            let mut exec = pool.executor();
-            pool.run_until(#inner_ident(), &mut exec)
+            let mut spawn = pool.spawner();
+            pool.run_until(#inner_ident(), &mut spawn)
         }
     ).into()
 }
