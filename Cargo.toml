@@ -1,6 +1,6 @@
 [package]
 name = "futures-await-test-preview"
-version = "0.3.0-alpha.2"
+version = "0.3.0-alpha.9"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
 license = "MIT"
 readme = "README.md"
@@ -21,7 +21,7 @@ name = "futures_await_test"
 proc-macro = true
 
 [dependencies]
-futures-preview = "0.3.0-alpha.1"
+futures-preview = "0.3.0-alpha.9"
 proc-macro2 = "0.4"
 quote = "0.6"
-syn = { version = "0.14", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
+syn = { version = "0.15", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
