@@ -2,6 +2,7 @@
 name = "futures-await-test-preview"
 version = "0.3.0-alpha.9"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
+edition = "2018"
 license = "MIT"
 readme = "README.md"
 keywords = ["async"]
@@ -21,7 +22,7 @@ name = "futures_await_test"
 proc-macro = true
 
 [dependencies]
-futures-preview = "0.3.0-alpha.9"
+futures-preview = "0.3.0-alpha.10"
 proc-macro2 = "0.4"
 quote = "0.6"
 syn = { version = "0.15", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }

@@ -1,7 +1,5 @@
 #![feature(async_await, await_macro, futures_api, termination_trait_lib)]
 
-extern crate futures;
-extern crate futures_await_test;
 use futures::future::lazy;
 use futures::prelude::*;
 use futures_await_test::async_test;
