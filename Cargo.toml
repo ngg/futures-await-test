@@ -2,6 +2,7 @@
 name = "futures-await-test"
 version = "0.1.7"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
+edition = "2018"
 license = "MIT"
 readme = "README.md"
 keywords = ["async"]
