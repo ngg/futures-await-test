@@ -1,13 +1,10 @@
 #![recursion_limit = "4096"]
 
 extern crate proc_macro;
-extern crate proc_macro2;
-#[macro_use]
-extern crate quote;
-extern crate syn;
 
 use proc_macro::TokenStream;
 use proc_macro2::Span;
+use quote::quote_spanned;
 use syn::{Ident, Item};
 
 #[proc_macro_attribute]
@@ -45,7 +42,7 @@ pub fn async_test(attribute: TokenStream, function: TokenStream) -> TokenStream 
     };
 
     quote_spanned!(span=>
-        #[async]
+        #[r#async]
         #parsed
 
         #[test]
