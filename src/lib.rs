@@ -5,7 +5,7 @@ extern crate proc_macro;
 use proc_macro::TokenStream;
 use proc_macro2::Span;
 use quote::quote;
-use syn::{Ident, Item};
+use syn::{parse_quote, Ident, Item, Visibility};
 
 #[proc_macro_attribute]
 pub fn async_test(params: TokenStream, function: TokenStream) -> TokenStream {
@@ -14,39 +14,32 @@ pub fn async_test(params: TokenStream, function: TokenStream) -> TokenStream {
         "the #[async_test] attribute currently does not take parameters"
     );
 
-    let mut parsed = syn::parse::<Item>(function).expect("failed to parse tokens as a function");
-    let mut attrs = vec![];
-    let (ident, inner_ident) = match parsed {
-        Item::Fn(ref mut item) => {
-            let orig = item.ident.clone();
-            let inner_name = "_inner_".to_owned() + &orig.to_string();
-            item.ident = Ident::new(&inner_name, Span::call_site());
-            std::mem::swap(&mut attrs, &mut item.attrs);
-            (orig, item.ident.clone())
-        }
-        _ => panic!("#[async_test] can only be applied to functions"),
-    };
-
-    let ret_type = if attrs.iter().any(|a| {
-        a.path
-            .segments
-            .first()
-            .map(|s| s.into_value().ident == "should_panic")
-            .unwrap_or(false)
-    }) {
-        quote!(())
-    } else {
-        quote!(impl ::std::process::Termination)
-    };
-
-    quote!(
-        async #parsed
-
-        #[test]
-        #(#attrs )*
-        fn #ident() -> #ret_type {
+    let mut inner = syn::parse::<Item>(function).expect("failed to parse tokens as a function");
+    let mut outer = inner.clone();
+    if let (&mut Item::Fn(ref mut inner_fn), &mut Item::Fn(ref mut outer_fn)) =
+        (&mut inner, &mut outer)
+    {
+        inner_fn.ident = Ident::new(
+            &("_inner_".to_owned() + &inner_fn.ident.to_string()),
+            Span::call_site(),
+        );
+        let inner_ident = &inner_fn.ident;
+        inner_fn.vis = Visibility::Inherited;
+        inner_fn.attrs.clear();
+        assert!(
+            outer_fn.asyncness.take().is_some(),
+            "#[async_test] can only be applied to async functions"
+        );
+        outer_fn.attrs.push(parse_quote!(#[test]));
+        outer_fn.block = Box::new(parse_quote!({
             ::futures::executor::LocalPool::new().run_until(#inner_ident())
-        }
+        }));
+    } else {
+        panic!("#[async_test] can only be applied to async functions")
+    }
+    quote!(
+        #inner
+        #outer
     )
     .into()
 }
