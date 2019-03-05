@@ -23,6 +23,6 @@ proc-macro = true
 
 [dependencies]
 futures-preview = "0.3.0-alpha.13"
-proc-macro2 = "0.4"
-quote = "0.6"
-syn = { version = "0.15", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
+proc-macro2 = "0.4.19"
+quote = "0.6.8"
+syn = { version = "0.15.22", features = ["full", "parsing", "printing", "proc-macro"], default-features = false }
