@@ -1,4 +1,4 @@
-#![feature(async_await, await_macro)]
+#![feature(async_await)]
 
 use futures::future::lazy;
 use futures::prelude::*;
@@ -15,19 +15,19 @@ fn create_result_future() -> impl Future<Output = Result<u32, ()>> {
 #[async_test]
 #[should_panic]
 async fn panic_test() {
-    let x = await!(create_future());
+    let x = create_future().await;
     assert!(x == 5);
 }
 
 #[async_test]
 async fn normal_test() {
-    let x = await!(create_future());
+    let x = create_future().await;
     assert!(x == 4);
 }
 
 #[async_test]
 async fn result_test() -> Result<(), ()> {
-    let x = await!(create_result_future())?;
+    let x = create_result_future().await?;
     assert!(x == 4);
     Ok(())
 }
