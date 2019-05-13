@@ -33,7 +33,7 @@ pub fn async_test(params: TokenStream, input: TokenStream) -> TokenStream {
         );
         outer_fn.attrs.push(parse_quote!(#[test]));
         outer_fn.block = Box::new(parse_quote!({
-            ::futures::executor::LocalPool::new().run_until(#inner_ident())
+            ::futures_await_test::reexport::LocalPool::new().run_until(#inner_ident())
         }));
     } else {
         panic!("#[async_test] can only be applied to async functions")
