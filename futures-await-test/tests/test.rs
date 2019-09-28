@@ -1,5 +1,3 @@
-#![feature(async_await)]
-
 use futures_await_test::async_test;
 
 async fn create_future() -> u32 {

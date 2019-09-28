@@ -20,15 +20,15 @@ pub fn async_test(params: TokenStream, input: TokenStream) -> TokenStream {
     if let (&mut Item::Fn(ref mut inner_fn), &mut Item::Fn(ref mut outer_fn)) =
         (&mut inner, &mut outer)
     {
-        inner_fn.ident = Ident::new(
-            &("_inner_".to_string() + &inner_fn.ident.to_string()),
+        inner_fn.sig.ident = Ident::new(
+            &("_inner_".to_string() + &inner_fn.sig.ident.to_string()),
             Span::call_site(),
         );
-        let inner_ident = &inner_fn.ident;
+        let inner_ident = &inner_fn.sig.ident;
         inner_fn.vis = Visibility::Inherited;
         inner_fn.attrs.clear();
         assert!(
-            outer_fn.asyncness.take().is_some(),
+            outer_fn.sig.asyncness.take().is_some(),
             "#[async_test] can only be applied to async functions"
         );
         outer_fn.attrs.push(parse_quote!(#[test]));

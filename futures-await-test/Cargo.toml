@@ -1,6 +1,6 @@
 [package]
 name = "futures-await-test-preview"
-version = "0.3.0-alpha.16"
+version = "0.3.0-alpha.19"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
 edition = "2018"
 license = "MIT"
@@ -21,5 +21,5 @@ travis-ci = { repository = "ngg/futures-await-test" }
 name = "futures_await_test"
 
 [dependencies]
-futures-executor-preview = "0.3.0-alpha.16"
-futures-await-test-macro-preview = { path = "../futures-await-test-macro", version = "=0.3.0-alpha.16" }
+futures-executor-preview = "0.3.0-alpha.19"
+futures-await-test-macro-preview = { path = "../futures-await-test-macro", version = "=0.3.0-alpha.19" }
