@@ -1,1 +1,1 @@
-Helper crate for futures-await-test-preview.
+Helper crate for futures-await-test.

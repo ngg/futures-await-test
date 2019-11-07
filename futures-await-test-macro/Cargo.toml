@@ -1,6 +1,6 @@
 [package]
-name = "futures-await-test-macro-preview"
-version = "0.3.0-alpha.19"
+name = "futures-await-test-macro"
+version = "0.3.0"
 authors = ["Gergely Nagy <ngg@ngg.hu>"]
 edition = "2018"
 license = "MIT"
@@ -10,14 +10,13 @@ categories = ["asynchronous", "rust-patterns"]
 repository = "https://github.com/ngg/futures-await-test"
 homepage = "https://github.com/ngg/futures-await-test"
 description = """
-Helper crate for futures-await-test-preview.
+Helper crate for futures-await-test.
 """
 
 [badges]
 travis-ci = { repository = "ngg/futures-await-test" }
 
 [lib]
-name = "futures_await_test_macro"
 proc-macro = true
 
 [dependencies]
